@@ -1,0 +1,15 @@
+{% extends 'women/base.html' %}
+
+{% block content %}
+<p>
+    {% for i in page_obj %}
+    <h1>{{ i.title }}</h1>
+    <p><img class="img-article-left thumb" src="{{i.photo.url}}"></p>
+    {% endfor %}
+</p>
+<footer>
+    {% for p in page_obj.paginator.page_range %}
+<a href="?page={{ p }}">{{ p }}</a>
+{% endfor %}
+</footer>
+{% endblock %}

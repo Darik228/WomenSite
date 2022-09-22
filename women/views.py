@@ -3,8 +3,8 @@ from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from .models import Women, Category
-from .forms import AddPostForm, RegisterUserForm, LoginUserForm, ContactForm
-from django.views.generic import ListView, DetailView, CreateView, FormView
+from .forms import AddPostForm, RegisterUserForm, LoginUserForm, ContactForm, WomenUpdateForm
+from django.views.generic import ListView, DetailView, CreateView, FormView, DeleteView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .utils import *
@@ -237,3 +237,33 @@ class LoginUser(DataMixin, LoginView):
 def logout_user(request):
     logout(request)
     return redirect('home')
+
+
+class DeletePost(DataMixin, DeleteView):
+    model = Women
+    template_name = 'women/delete.html'
+    success_url = reverse_lazy('home')
+    slug_url_kwarg = 'post_slug'
+    context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Удаление поста', cat_selected=context['post'].id)
+        context = dict(list(context.items()) + list(c_def.items()))
+        return context
+
+
+class WomenUpdate(DataMixin, LoginRequiredMixin, UpdateView):
+    model = Women
+    template_name = 'women/update.html'
+    form_class = WomenUpdateForm
+    success_url = reverse_lazy('home')
+    slug_url_kwarg = 'post_slug'
+    context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title='Изменение поста', cat_selected=context['post'].id)
+        context = dict(list(context.items()) + list(c_def.items()))
+        return context
+

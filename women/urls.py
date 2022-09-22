@@ -13,5 +13,8 @@ urlpatterns = [
     path('register', RegisterUser.as_view(), name='register'),
     path('post/<slug:post_slug>/', ShowPost.as_view(), name='post'),
     path('category/<slug:cat_slug>/', cache_page(60)(WomenCategory.as_view()), name='category'),
+    path('delete/<slug:post_slug>/', DeletePost.as_view(), name='delete'),
+    path('update/<slug:post_slug>/', WomenUpdate.as_view(), name='update')
+
     #  path('categories/<int:cat_id>/', categories),
 ]

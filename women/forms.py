@@ -45,3 +45,11 @@ class ContactForm(forms.Form):
     email = forms.EmailField(label='Почта')
     content = forms.CharField(widget=forms.Textarea(attrs={'cols': 60, 'rows': 10}))
     captcha = CaptchaField(label='Я не робот')
+
+
+class WomenUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Women
+        fields = ('title', 'slug', 'content', 'is_published', 'photo', 'cat')
+
+

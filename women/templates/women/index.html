@@ -16,6 +16,8 @@
 	{% endautoescape %}
 			<div class="clear"></div>
 			<p class="link-read-post"><a href="{{ p.get_absolute_url }}">Читать пост</a></p>
+				<p class="link-read-post"><a href="{% url 'delete' p.slug %}">Удалить</a></p>
+
 			</li>
 	{% endfor %}
 </ul>

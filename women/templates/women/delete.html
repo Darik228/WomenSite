@@ -8,5 +8,8 @@
 {% endif %}
 
 {{post.content|linebreaks}}
-<p class="link-read-post"><a href="{% url 'update' post.slug %}">Изменить</a></p>
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Подтвердить">
+</form>
 {% endblock %}
